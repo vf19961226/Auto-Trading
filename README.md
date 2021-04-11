@@ -1,6 +1,6 @@
 # Auto-Trading
 ## 簡介
-使用由美國那斯達克（Nasdaq）所提供的IBM（International Business Machines Corporation）過去5年的歷史股價作為基礎資料，並基於**長短期記憶（Long Short-Term Memory，LSTM）**建立一預測模型，用以預測未來一天的交易狀態，並附有一測試檔案提供測試。在本專案中以追求收益最大化為目標。
+使用由美國那斯達克（Nasdaq）所提供的IBM（International Business Machines Corporation）過去5年的歷史股價作為基礎資料，並基於 **長短期記憶（Long Short-Term Memory，LSTM）** 建立一預測模型，用以預測未來一天的交易狀態，並附有一測試檔案提供測試。在本專案中以追求收益最大化為目標。
 
 ## 使用數據
 ### IBM過去股價
