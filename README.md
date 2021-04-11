@@ -33,3 +33,20 @@
 
 #### 前後皆為連續漲跌區間
 此狀態為目前漲跌狀態將會維持超過一天，且達到高點或低點後的漲跌狀態也會維持超過一天。如下圖所示。
+
+
+## 如何使用本專案
+### 環境要求    
+| Name| Version
+|:---:|---:
+|Python|3.6.12
+|Numpy|1.19.2
+|Pandas|1.1.3
+|Keras|2.3.1
+|Matplotlib|3.3.4
+
+### 命令參數    
+|Name|Input|Default
+|:---:|---|---
+|--data|訓練資料|./data/training_data.csv
+|--output|輸出預測結果|./output.csv
