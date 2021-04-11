@@ -63,7 +63,7 @@ output = MyLogic.mylogic(spread, sum_spread)
 |Keras|2.3.1
 |Matplotlib|3.3.4
 
-可在終端機建立Python版本為3.6.12的環境後使用[**requirements.txt**](https://github.com/vf19961226/Electricity-Forecasting/blob/main/requirements.txt)進行套件包安裝。
+可在終端機建立Python版本為3.6.12的環境後使用[**requirements.txt**](https://github.com/vf19961226/Auto-Trading/blob/main/requirements.txt)進行套件包安裝。
 
     pip install -r requirements.txt
     
@@ -80,7 +80,7 @@ output = MyLogic.mylogic(spread, sum_spread)
     python app.py --training "your training data" --testing "your testing data" --output "your output data"
     
 ### 預測結果
-最終預測結果輸出為[**output.csv**](https://github.com/vf19961226/Electricity-Forecasting/blob/main/output.csv)，其內容如下表所示。
+最終預測結果輸出為[**output.csv**](https://github.com/vf19961226/Auto-Trading/blob/main/output.csv)，其內容如下表所示。
 
 | Status
 |---
