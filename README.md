@@ -34,7 +34,7 @@
 |-1|賣出1單位
 
 #### 交易邏輯
-本專案之交易邏輯已被包裝在[**MyLogic.py**](https://github.com/vf19961226/Auto-Trading/blob/main/MyLogic.py)中的**mylogic**。需先使用[**MyLogic.py**](https://github.com/vf19961226/Auto-Trading/blob/main/MyLogic.py)中的**get_spread**以及**get_sum_spread**計算出每日之間漲跌的幅度和漲跌區間總收益以及高點與低點，以利後續進行判別交易狀態。可在[**trader.py**](https://github.com/vf19961226/Auto-Trading/blob/main/trader.py)使用以下指令呼叫**get_spread**、**get_sum_spread**、**mylogic**等功能。交易邏輯主要分為**前後皆為連續漲跌區間**、**前段為單一漲跌區間，後段唯連續漲跌區間**、**前後皆為單一漲跌區間**三種狀態進行探討，其中可在細分為比較前後收益多寡、手中持股狀態等問題進行探討。    
+本專案之交易邏輯已被包裝在[**MyLogic.py**](https://github.com/vf19961226/Auto-Trading/blob/main/MyLogic.py)中的**mylogic**。需先使用[**MyLogic.py**](https://github.com/vf19961226/Auto-Trading/blob/main/MyLogic.py)中的**get_spread**以及**get_sum_spread**計算出每日之間漲跌的幅度和漲跌區間總收益以及高點與低點，以利後續進行判別交易狀態。可在[**trader.py**](https://github.com/vf19961226/Auto-Trading/blob/main/trader.py)使用以下指令呼叫**get_spread**、**get_sum_spread**、**mylogic**等功能，如下所示。交易邏輯主要分為**前後皆為連續漲跌區間**、**前段為單一漲跌區間，後段唯連續漲跌區間**、**前後皆為單一漲跌區間**三種狀態進行探討，其中可在細分為比較前後收益多寡、手中持股狀態等問題進行探討。    
 ```py
 import MyLogic
 
