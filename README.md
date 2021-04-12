@@ -77,7 +77,7 @@ output = MyLogic.mylogic(spread, sum_spread)
 
 環境安裝完成後，可於直接於終端機中執行以下指令，並將參數改成你的參數，或是直接使用我們的預設值而不輸入參數。  
 
-    python app.py --training "your training data" --testing "your testing data" --output "your output data"
+    python trader.py --training "your training data" --testing "your testing data" --output "your output data"
     
 ### 預測結果
 最終預測結果輸出為[**output.csv**](https://github.com/vf19961226/Auto-Trading/blob/main/output.csv)，其內容如下表所示。
