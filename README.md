@@ -49,9 +49,7 @@ output = MyLogic.mylogic(spread, sum_spread)
 * **前後皆為單一漲跌區間**    
 此狀態為目前漲跌狀態將會維持一天，且達到高點或低點後的漲跌狀態也會維持一天。如下圖中C所示。    
 
-![status_example](https://github.com/vf19961226/Auto-Trading/blob/main/figure/status_example.png "Status Example")
-## 建立預測模型
-
+![status_example](https://github.com/vf19961226/Auto-Trading/blob/main/figure/status_example.png "Status Example")    
 
 ## 如何使用本專案
 ### 環境要求    
