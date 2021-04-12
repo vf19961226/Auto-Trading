@@ -89,23 +89,36 @@ def readTrain():
   return train
 ```    
 
-### 定義正規化攻式(四項數據訓練完後+加上邏輯算出的Label)
+### 定義正規化公式(四項數據訓練完後+加上邏輯算出的Label)
+* **先前邏輯所算出的label資料長度=training.csv的資料長度**
+* **將label手動新增1 row(其值為0)代表training後的第一天預設不做任何動作**
+
 ```py
 def normalize(train):
   train_norm = train.apply(lambda x: (x - np.mean(x)) / (np.max(x) - np.min(x)))
   train_norm = pd.concat([train_norm,label],axis=1) #加上label
   return train_norm
 ```
+
+### 建立訓練用data
+* **雖然Label資料長度比training多1，但是依據train.shape下去切割，故不會提取到手動增加的那一列**
+* **Y_train以to_categorical處理成one_hot encoding，先前label邏輯輸出為0,1,2就是為了此步**
+
+```py
+def buildTrain(train,pastDay,futureDay):
+    X_train, Y_train = [], []
+    for i in range(train.shape[0]-futureDay-pastDay):
+      X_train.append(np.array(train.iloc[i:i+pastDay])) #分割訓練集      
+      Y_train.append(np.array(train.iloc[i+pastDay:i+pastDay+futureDay]["Label"])) #分割輸出label
+
+    Y_train = keras.utils.to_categorical(Y_train, 3)
+    return np.array(X_train), np.array(Y_train)
+```
 ### 建立模型
-1. 第一層input數量為5項["Open", "High", "Low", "Close","Label"]
-2. 每筆交易以1單位為上限
-3. 允許買空賣空
-4. 手中持股上限為1單位，下限為-1單位
-5. 收益均使用開盤價計算，唯最後一天使用收盤價
-6. 最後一天將強制使用收盤價出清手中持股，持有1單位則賣出，持有-1單位則買入，使手中持股歸零
+1. 輸入層input數量為5項["Open", "High", "Low", "Close","Label"]
+2. 平坦層output為3，代表有三種狀態提供輸出
 ```py
 def buildManyToManyModel(shape):
-
   model = Sequential()
   model.add(LSTM(5, input_length=shape[1], input_dim=shape[2], return_sequences=False))
   model.add(Dense(3))
@@ -113,7 +126,23 @@ def buildManyToManyModel(shape):
   model.summary()
   return model
 ```
-
+### 進行預測
+```py
+for i in range(len(testing)-1):
+  dataforpredict = []
+  label_predicet = []
+  #加上預測 
+  train=predict_data.append(testing[:(i+1)]) #每次只讀取下一筆資料
+  train=train.reset_index(drop=True)#數字重新編排(新增的列數表頭會從0開始，故重新編排)
+  #Normalization
+  predict_norm = normalize_predict(train) #數據nomalize＋label
+  dataforpredict = buildpredict(predict_norm) #切割最後20比(def有先定義)
+  prediction=model_predict.predict_classes(dataforpredict)
+  insert=DataFrame(prediction,columns=['Label'])#轉變輸出的資料型別
+  label = label.append(insert)#將新輸出的Label加入原始label集下方，以便下一天預測
+  label=label.reset_index(drop=True)
+print(type(label))
+```
 ### 預測結果
 最終預測結果輸出為[**output.csv**](https://github.com/vf19961226/Auto-Trading/blob/main/output.csv)，其內容如下表所示。
 
