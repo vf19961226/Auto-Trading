@@ -88,8 +88,8 @@ def buy (unit, output):#買
 def sell (unit, output):#賣
     if unit != -1:
         unit = unit - 1
-        output.append(-1)
-        #output.append(2)
+        #output.append(-1)
+        output.append(2)
         print("賣出後剩餘： "+ str(unit) + " 單位")
     else:
         print("Sell Error")
@@ -607,7 +607,7 @@ def load_csv(file_name):
             data.append(row)
     print("Csv file is loaded")
     return data
-    
+
 def calculation(output, all_price):
     profit = 0
     #最後一天將所有持有股票出清
@@ -621,3 +621,24 @@ def calculation(output, all_price):
     for i in range(len(output)):
         profit = profit + output[i] * all_price[i] * (-1)
     return output, profit
+  
+def final_day(output):
+    one = 0
+    two = 0
+    for i in output:
+        if i == 1:
+            one = one + 1
+        elif i == 2:
+            two = two + 1
+            
+    if one - two == 1:
+        output.append(2)
+    elif one - two == -1:
+        output.append(1)
+    elif one - two == 0:
+        output.append(0)
+    return output
+    
+def testing_first_day(output):
+    output.append(0)
+    return output
