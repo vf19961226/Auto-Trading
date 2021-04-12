@@ -85,9 +85,24 @@ output = MyLogic.mylogic(spread, sum_spread)
 | Status
 |---
 |0
+|1
+|-1
+|1
+|0
+|0
+|0
+|-1
+|1
 |0
 |0
 |0
 |0
 |0
+|-1
+|1
 |0
+|0
+|0
+|0
+
+
