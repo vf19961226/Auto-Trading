@@ -61,7 +61,7 @@ output = MyLogic.mylogic(spread, sum_spread)
 |Numpy|1.19.2
 |Pandas|1.1.3
 |Keras|2.3.1
-|Matplotlib|3.3.4
+|tensorflow|2.1.0
 
 可在終端機建立Python版本為3.6.12的環境後使用[**requirements.txt**](https://github.com/vf19961226/Auto-Trading/blob/main/requirements.txt)進行套件包安裝。
 
@@ -126,6 +126,7 @@ def buildManyToManyModel(shape):
   model.summary()
   return model
 ```
+![lstm_structure](https://github.com/vf19961226/Auto-Trading/blob/main/figure/lstm_structure.jpg "Instructure_")
 ### 進行預測
 ```py
 for i in range(len(testing)-1):
@@ -136,13 +137,22 @@ for i in range(len(testing)-1):
   train=train.reset_index(drop=True)#數字重新編排(新增的列數表頭會從0開始，故重新編排)
   #Normalization
   predict_norm = normalize_predict(train) #數據nomalize＋label
-  dataforpredict = buildpredict(predict_norm) #切割最後20比(def有先定義)
+  dataforpredict = buildpredict(predict_norm) #切割最後20筆(def有先定義)
   prediction=model_predict.predict_classes(dataforpredict)
-  insert=DataFrame(prediction,columns=['Label'])#轉變輸出的資料型別
-  label = label.append(insert)#將新輸出的Label加入原始label集下方，以便下一天預測
+  insert=DataFrame(prediction,columns=['Label']) #轉變輸出的資料型別
+  label = label.append(insert) #將新輸出的Label加入原始label集下方，以便下一天預測
   label=label.reset_index(drop=True)
 print(type(label))
 ```
+### 取出預測數據
+1.將Label從testing第二天開始提取到最後一天
+
+    result.append(np.array(label.iloc[label.shape[0]-(len(testing)-1):label.shape[0]]))
+2.將輸出資料0,1,2轉換為-1,0,1
+3.將資料從三維(1,DAYS,Label)壓回二維(DAYS,Label)
+   
+    result = result.reshape(-1,1)
+
 ### 預測結果
 最終預測結果輸出為[**output.csv**](https://github.com/vf19961226/Auto-Trading/blob/main/output.csv)，其內容如下表所示。
 
@@ -153,9 +163,6 @@ print(type(label))
 |-1
 |1
 |0
-|.
-|.
-|.
 |0
 |0
 |0
