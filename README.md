@@ -73,12 +73,47 @@ output = MyLogic.mylogic(spread, sum_spread)
 |:---:|---|---
 |--training|訓練資料|./data/training.csv
 |--testing|測試資料|./data/testing.csv
+|--label|買賣label|./data/label.csv
 |--output|輸出預測結果|./output.csv
 
 環境安裝完成後，可於直接於終端機中執行以下指令，並將參數改成你的參數，或是直接使用我們的預設值而不輸入參數。  
 
     python trader.py --training "your training data" --testing "your testing data" --output "your output data"
-    
+
+## 買賣預測  
+
+### 匯入資料集並加上表頭
+```py
+def readTrain():
+  train = pd.read_csv("training.csv",names=["Open", "High", "Low", "Close"]) 
+  return train
+```    
+
+### 定義正規化攻式(四項數據訓練完後+加上邏輯算出的Label)
+```py
+def normalize(train):
+  train_norm = train.apply(lambda x: (x - np.mean(x)) / (np.max(x) - np.min(x)))
+  train_norm = pd.concat([train_norm,label],axis=1) #加上label
+  return train_norm
+```
+### 建立模型
+1. 第一層input數量為5項["Open", "High", "Low", "Close","Label"]
+2. 每筆交易以1單位為上限
+3. 允許買空賣空
+4. 手中持股上限為1單位，下限為-1單位
+5. 收益均使用開盤價計算，唯最後一天使用收盤價
+6. 最後一天將強制使用收盤價出清手中持股，持有1單位則賣出，持有-1單位則買入，使手中持股歸零
+```py
+def buildManyToManyModel(shape):
+
+  model = Sequential()
+  model.add(LSTM(5, input_length=shape[1], input_dim=shape[2], return_sequences=False))
+  model.add(Dense(3))
+  model.compile(loss="mse", optimizer="adam")
+  model.summary()
+  return model
+```
+
 ### 預測結果
 最終預測結果輸出為[**output.csv**](https://github.com/vf19961226/Auto-Trading/blob/main/output.csv)，其內容如下表所示。
 
@@ -89,20 +124,12 @@ output = MyLogic.mylogic(spread, sum_spread)
 |-1
 |1
 |0
-|0
-|0
-|-1
-|1
-|0
-|0
+|.
+|.
+|.
 |0
 |0
 |0
-|-1
-|1
-|0
-|0
-|0
-|0
+
 
 
