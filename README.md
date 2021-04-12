@@ -148,7 +148,7 @@ print(type(label))
 1.將Label從testing第二天開始提取到最後一天
 
     result.append(np.array(label.iloc[label.shape[0]-(len(testing)-1):label.shape[0]]))
-2.將輸出資料0,1,2轉換為-1,0,1
+2.將輸出資料0,1,2轉換為-1,0,1    
 3.將資料從三維(1,DAYS,Label)壓回二維(DAYS,Label)
    
     result = result.reshape(-1,1)
